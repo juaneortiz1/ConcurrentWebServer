@@ -1,6 +1,3 @@
-Sure, here's the updated README file including the author and mentioning what was built in.
-
----
 
 # ConcurrentTestWebApp
 
