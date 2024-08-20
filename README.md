@@ -1,70 +1,80 @@
-
-# ConcurrentTestWebApp
+# SimpleConcurrentWebServer
 
 ## Overview
-ConcurrentTestWebApp is a simple threaded web server application written in Java. It serves HTML files and image files encoded in Base64, and is capable of handling multiple client connections concurrently. If the number of concurrent clients exceeds the set limit, it responds with a service unavailable message from a pre-defined text file.
+SimpleConcurrentWebServer is a basic multi-threaded web server built in Java. It serves HTML, CSS, JavaScript files, and image files encoded in Base64. The server supports multiple concurrent client requests and can also handle POST requests to save text data to a file.
 
 ## Features
-- Handles concurrent client connections using threads.
-- Serves HTML files and image files (PNG, JPG, JPEG) encoded in Base64.
-- Limits the maximum number of concurrent clients and provides a response if this limit is exceeded.
+- **Concurrent Request Handling**: Utilizes a thread pool to manage multiple client connections simultaneously.
+- **File Serving**: Serves HTML, CSS, JavaScript, and image files (PNG, JPG, JPEG) directly from the local disk.
+- **Base64 Image Encoding**: Converts image files to Base64 for embedding in HTML responses.
+- **POST Request Handling**: Accepts and processes POST requests to save data to a text file on the server.
 
 ## Project Structure
 ```
-ConcurrentTestWebApp/
+SimpleConcurrentWebServer/
 │
-├── src/
-│   └── main/
-│       └── resources/
-│           ├── index.html
-│           ├── exceeded.txt
-│           └── ... (other resources)
-│
-├── ConcurrentTestWebApp.java
-└── README.md
+├───src/
+│   ├───main/
+│   │   ├───java/
+│   │   │   └───edu/
+│   │   │       └───escuelaing/
+│   │   │           └───arep/
+│   │   │               └───ASE/
+│   │   │                   └───app/
+│   │   │                       └───SimpleWebServer.java
+│   │   └───resources/
+│   │       ├───index.html
+│   │       ├───style.css
+│   │       ├───script.js
+│   │       ├───image.png
+│   │       └───... (other resources)
+│   └───test/
+│       └───java/
+│           └───edu/
+│               └───escuelaing/
+│                   └───arep/
+│                       └───ASE/
+│                           └───app/
 ```
 
+## How to Run
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/your-repo/SimpleConcurrentWebServer.git
+   cd SimpleConcurrentWebServer
+   ```
 
+2. **Compile and Run the Server**:
+   ```bash
+   javac -d bin src/main/java/edu/escuelaing/arep/ASE/app/SimpleWebServer.java
+   java -cp bin edu.escuelaing.arep.ASE.app.SimpleWebServer
+   ```
 
-4. **Access the web server**:
-    - Open a web browser and navigate to `http://localhost:45000`.
-    - For search requests, navigate to `http://localhost:45000/search?file=filename`, where `filename` is the name of the file you want to search in the `resources` directory.
+3. **Access the Web Server**:
+   - Open a web browser and navigate to `http://localhost:8080`.
+   - The server will serve files from the `src/main/resources` directory.
 
 ## Configuration
-- **Default HTML file**: The default HTML file served is `index.html` located in `src/main/resources/`.
-- **Exceeded response file**: If the maximum number of clients is exceeded, the content from `exceeded.txt` located in `src/main/resources/` is served.
-- **Port**: The server listens on port `45000` by default.
-- **Maximum Clients**: The maximum number of concurrent clients is set to `3`.
+- **Web Root Directory**: The server serves files from the `src/main/resources/` directory by default.
+- **Port**: The server listens on port `8080` by default.
+- **Thread Pool**: The server uses a thread pool with a fixed size of 10 threads to handle concurrent requests.
 
 ## What Was Built
 This project includes the following built-in functionalities:
-- A simple HTTP server capable of handling requests for HTML and image files.
+- A simple HTTP server capable of handling GET requests for various file types (HTML, CSS, JavaScript, images).
+- POST request handling to save text data into files on the server.
 - Concurrent handling of client requests using Java threads.
-- Limitation on the number of concurrent clients with a custom response for exceeding clients.
-- Base64 encoding for image files served through the HTTP response.
+- Base64 encoding for images embedded in HTML responses.
+![image](https://github.com/user-attachments/assets/63a4532c-34d3-45f4-b30f-9c373c505ee3)
+![image](https://github.com/user-attachments/assets/83e7b049-55b5-415f-94be-0dc0403f5a90)
+![image](https://github.com/user-attachments/assets/311325fb-3abc-45a0-b5ec-164b547aaf4c)
+![image](https://github.com/user-attachments/assets/4be3a49f-712b-4cea-937c-b396e81bd338)
 
-## Comparison with Initial Sequential Version
-The initial version of this web server was sequential, meaning it could handle only one client at a time. Here are some key differences:
 
-### Initial Sequential Version
-- **Sequential Handling**: The server handled one client at a time. The server socket accepted a connection and processed it fully before accepting another.
-- **Blocking**: While handling a client request, the server was blocked and could not handle other incoming connections.
-- **Simple Implementation**: Easier to implement but not efficient for handling multiple clients.
-
-### Concurrent Version (Current)
-- **Concurrent Handling**: The server can handle multiple clients at the same time using threads.
-- **Non-Blocking**: By using threads, the server can accept new connections while processing other requests, improving responsiveness and throughput.
-- **Synchronization**: Introduces complexity due to the need to manage concurrent access to shared resources (e.g., client count).
-- **Client Limit**: Includes a mechanism to limit the number of concurrent clients and respond appropriately if the limit is exceeded.
-
-### Key Benefits of the Concurrent Version
-- **Improved Performance**: Can handle multiple clients simultaneously, improving overall performance and user experience.
-- **Scalability**: More scalable as it can handle more clients efficiently up to the set limit.
-- **User Experience**: Users are less likely to experience delays due to blocking, as requests are processed concurrently.
-
+## Key Differences from Sequential Servers
+- **Concurrent Handling**: Unlike sequential servers that process one request at a time, this server can handle multiple requests concurrently, improving performance and responsiveness.
+- **Non-Blocking I/O**: The server's non-blocking I/O allows it to continue accepting and processing new connections while handling ongoing requests.
+- **Improved User Experience**: With concurrent request handling, users experience less delay and better responsiveness when accessing the server.
 
 ## Author
 This project was developed by Juan Esteban Ortiz.
-
-
-
